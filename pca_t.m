@@ -1,4 +1,4 @@
-function [eigen,scores,mx]= pca_t(film,dv)
+function [eigen,scores,latent,explained,mx]= pca_t(film,dv)
     dt = length(film(1,1,:));
     dx = length(film(:,1,1));
     dy = length(film(1,:,1));
@@ -9,8 +9,8 @@ function [eigen,scores,mx]= pca_t(film,dv)
     X=X';
     %% Evaluate covariance
     %x = im2col(image,[8 8],'distinct'); % convert to 8x8 blocks, each block in column
-    mx = nansum(X,2)/(dx*dy);
-    [eigen,scores] = pca(X);   % PCA of X returns PC and 
+    mx = sum(X,2,"omitnan")/(dx*dy);
+    [eigen,scores,latent,~,explained] = pca(X);   % PCA of X returns PC and 
     eigen= eigen(:,1:dv);
     scores = scores(:,1:dv);
 end

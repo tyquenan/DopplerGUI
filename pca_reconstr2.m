@@ -1,4 +1,4 @@
-function pca_reconstr(eigen,scores,rem,nrem,wake,noise,mx,phases,curpath)
+    function pca_reconstr2(eigen,scores,EV_rem,EV_nrem,EV_wake,EV_noiseless,mx,phases,curpath)
     load(string(curpath)+"Doppler.mat");
     film = Doppler_film;
     dt = length(film(1,1,:));
@@ -6,12 +6,6 @@ function pca_reconstr(eigen,scores,rem,nrem,wake,noise,mx,phases,curpath)
     dy = length(film(1,:,1));
     %%
     films = zeros(1,dt,dx*dy);
-    %%
-    EV_noiseless = find([noise.Value] == 0);
-    EV_wake = find([wake.Value] == 1);
-    EV_rem = find([rem.Value] == 1);
-    EV_nrem = find([nrem.Value] == 1);
-    save(string(curpath)+"EV_done.mat","phases","eigen","scores","EV_noiseless","EV_nrem","EV_wake","EV_rem","mx");
     disp([length(EV_rem) length(EV_nrem) length(EV_wake) length(find([noise.Value] == 1))]);
     eigen_nless=eigen(EV_noiseless,:);
     scores_nless = scores(EV_noiseless,:);
